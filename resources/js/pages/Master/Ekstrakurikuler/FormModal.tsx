@@ -141,11 +141,15 @@ export default function FormModal({ isOpen, onClose, ekstrakurikuler, gurus }: P
                                 <SelectValue placeholder="Pilih pembina" />
                             </SelectTrigger>
                             <SelectContent>
-                                {gurus.map((guru) => (
+                                {gurus && Array.isArray(gurus) ? gurus.map((guru) => (
                                     <SelectItem key={guru.id} value={guru.id.toString()}>
                                         {guru.user.name}
                                     </SelectItem>
-                                ))}
+                                )) : (
+                                    <SelectItem value="" disabled>
+                                        Tidak ada guru tersedia
+                                    </SelectItem>
+                                )}
                             </SelectContent>
                         </Select>
                         {errors.pembina_id && (

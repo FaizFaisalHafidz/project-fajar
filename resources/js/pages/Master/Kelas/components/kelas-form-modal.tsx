@@ -219,11 +219,15 @@ export function KelasFormModal({
                                 <SelectValue placeholder="Pilih Tahun Ajaran" />
                             </SelectTrigger>
                             <SelectContent>
-                                {tahunAjaranList.map((tahunAjaran) => (
+                                {tahunAjaranList && Array.isArray(tahunAjaranList) ? tahunAjaranList.map((tahunAjaran) => (
                                     <SelectItem key={tahunAjaran.id} value={tahunAjaran.id.toString()}>
                                         {tahunAjaran.nama_tahun_ajaran}
                                     </SelectItem>
-                                ))}
+                                )) : (
+                                    <SelectItem value="" disabled>
+                                        Tidak ada tahun ajaran tersedia
+                                    </SelectItem>
+                                )}
                             </SelectContent>
                         </Select>
                         {errors.tahun_ajaran_id && (
@@ -241,11 +245,15 @@ export function KelasFormModal({
                                 <SelectValue placeholder="Pilih Jurusan" />
                             </SelectTrigger>
                             <SelectContent>
-                                {jurusanList.map((jurusan) => (
+                                {jurusanList && Array.isArray(jurusanList) ? jurusanList.map((jurusan) => (
                                     <SelectItem key={jurusan.id} value={jurusan.id.toString()}>
                                         {jurusan.kode_jurusan} - {jurusan.nama_jurusan}
                                     </SelectItem>
-                                ))}
+                                )) : (
+                                    <SelectItem value="" disabled>
+                                        Tidak ada jurusan tersedia
+                                    </SelectItem>
+                                )}
                             </SelectContent>
                         </Select>
                         {errors.jurusan_id && (
@@ -297,11 +305,15 @@ export function KelasFormModal({
                             className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                         >
                             <option value="">Belum ditentukan</option>
-                            {guruList.map((guru) => (
+                            {guruList && Array.isArray(guruList) ? guruList.map((guru) => (
                                 <option key={guru.id} value={guru.id.toString()}>
                                     {guru.nama_guru} ({guru.nip})
                                 </option>
-                            ))}
+                            )) : (
+                                <option value="" disabled>
+                                    Tidak ada guru tersedia
+                                </option>
+                            )}
                         </select>
                     </div>
 
