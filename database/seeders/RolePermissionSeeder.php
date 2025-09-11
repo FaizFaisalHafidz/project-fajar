@@ -103,34 +103,31 @@ class RolePermissionSeeder extends Seeder
         ];
 
         foreach ($permissions as $permission) {
-            Permission::create(['name' => $permission]);
+            Permission::updateOrCreate(['name' => $permission]);
         }
 
         // Create roles and assign permissions
         
         // Super Admin - All permissions
-        $superAdmin = Role::create(['name' => 'super-admin']);
+        $superAdmin = Role::updateOrCreate(['name' => 'super-admin']);
         $superAdmin->givePermissionTo(Permission::all());
 
         // Admin Sekolah
-        $adminSekolah = Role::create(['name' => 'admin-sekolah']);
-        $adminSekolah->givePermissionTo([
+        $adminSekolah = Role::updateOrCreate(['name' => 'admin-sekolah']);
+        $adminSekolah->syncPermissions([
             'view-dashboard',
             'view-users', 'create-users', 'edit-users', 'delete-users',
             'manage-tahun-akademik', 'manage-semester', 'manage-jurusan', 
-            'manage-kelas', 'manage-mata-pelajaran', 'manage-ekstrakurikuler', 'manage-kkm',
+            'manage-kelas', 'manage-mata-pelajaran', 'manage-ekstrakurikuler',
             'manage-guru', 'manage-siswa', 'manage-wali-murid',
             'view-penugasan-mengajar', 'create-penugasan-mengajar', 'edit-penugasan-mengajar', 'delete-penugasan-mengajar',
             'view-nilai', 'approve-nilai',
-            'view-raport', 'generate-raport', 'cetak-raport-sampul-1', 'cetak-raport-sampul-2', 
-            'cetak-raport-sampul-4', 'cetak-raport-nilai', 'cetak-prestasi-catatan', 'export-laporan',
-            'view-clustering', 'run-clustering', 'manage-clustering-config', 'view-cluster-profile',
+            'export-laporan',
             'view-statistik', 'view-monitoring', 'view-analytics',
-            'manage-system-settings', 'view-logs', 'manage-backup', 'reset-tahun-akademik',
         ]);
 
         // Kepala Sekolah
-        $kepalaSekolah = Role::create(['name' => 'kepala-sekolah']);
+        $kepalaSekolah = Role::updateOrCreate(['name' => 'kepala-sekolah']);
         $kepalaSekolah->givePermissionTo([
             'view-dashboard',
             'view-users',
@@ -142,20 +139,16 @@ class RolePermissionSeeder extends Seeder
         ]);
 
         // Guru
-        $guru = Role::create(['name' => 'guru']);
-        $guru->givePermissionTo([
+        $guru = Role::updateOrCreate(['name' => 'guru']);
+        $guru->syncPermissions([
             'view-dashboard',
             'view-penugasan-mengajar',
-            'view-nilai', 'input-nilai-pengetahuan', 'input-nilai-keterampilan', 
-            'input-nilai-absensi', 'input-nilai-sosial', 'input-nilai-spiritual',
-            'input-nilai-ekstrakurikuler', 'input-prestasi', 'edit-nilai',
-            'view-raport', 'generate-raport', 'cetak-raport-sampul-1', 'cetak-raport-sampul-2', 
-            'cetak-raport-sampul-4', 'cetak-raport-nilai', 'cetak-prestasi-catatan', 'export-laporan',
+            'view-nilai', 'edit-nilai',
             'view-clustering', 'view-cluster-profile', 'view-rekomendasi',
         ]);
 
         // Wali Kelas
-        $waliKelas = Role::create(['name' => 'wali-kelas']);
+        $waliKelas = Role::updateOrCreate(['name' => 'wali-kelas']);
         $waliKelas->givePermissionTo([
             'view-dashboard',
             'view-penugasan-mengajar',
@@ -169,7 +162,7 @@ class RolePermissionSeeder extends Seeder
         ]);
 
         // Siswa
-        $siswa = Role::create(['name' => 'siswa']);
+        $siswa = Role::updateOrCreate(['name' => 'siswa']);
         $siswa->givePermissionTo([
             'view-dashboard',
             'view-own-grades',
@@ -178,7 +171,7 @@ class RolePermissionSeeder extends Seeder
         ]);
 
         // Wali Murid / Orang Tua
-        $waliMurid = Role::create(['name' => 'wali-murid']);
+        $waliMurid = Role::updateOrCreate(['name' => 'wali-murid']);
         $waliMurid->givePermissionTo([
             'view-dashboard',
             'view-child-grades',

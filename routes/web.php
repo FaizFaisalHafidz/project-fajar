@@ -17,6 +17,7 @@ use App\Http\Controllers\Pengaturan\ResetTahunAkademikController;
 use App\Http\Controllers\PengajaranController;
 use App\Http\Controllers\PenilaianController;
 use App\Http\Controllers\SiswaController;
+use App\Http\Controllers\WaliMuridController;
 
 // Route::get('/', function () {
 //     return Inertia::render('welcome');
@@ -204,6 +205,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/analisis', [SiswaController::class, 'analisis'])->name('analisis');
         Route::get('/rekomendasi', [SiswaController::class, 'rekomendasi'])->name('rekomendasi');
         Route::get('/progress', [SiswaController::class, 'progress'])->name('progress');
+    });
+
+    // Routes untuk Wali Murid
+    Route::prefix('wali-murid')->name('wali-murid.')->group(function () {
+        Route::get('/', [WaliMuridController::class, 'pantauAnak'])->name('pantau-anak');
+        Route::get('/pantau-anak', [WaliMuridController::class, 'pantauAnak'])->name('pantau-anak.index');
     });
 
     // Routes untuk Raport

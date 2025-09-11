@@ -11,6 +11,14 @@ import { BookOpen, Calendar, Heart, Star, Target, Trophy, UserCheck, Users } fro
 import { useState } from 'react';
 
 interface Props {
+    auth: {
+        user: {
+            id: number;
+            name: string;
+            email: string;
+            roles: { name: string }[];
+        };
+    };
     guru: any;
     tahunAjaranAktif: any;
     semesterAktif: any;
@@ -28,6 +36,7 @@ interface Props {
 }
 
 export default function PenilaianIndex({ 
+    auth,
     guru, 
     tahunAjaranAktif, 
     semesterAktif, 
@@ -37,6 +46,12 @@ export default function PenilaianIndex({
 }: Props) {
     const [activeTab, setActiveTab] = useState('pengetahuan');
     const [selectedPenugasan, setSelectedPenugasan] = useState<string>('all');
+
+    // Get user roles
+    const roles = auth.user?.roles?.map(role => role.name) || [];
+    
+    // Check if user can input grades (exclude wali-kelas and guru roles from editing)
+    const canInputGrades = !roles.includes('wali-kelas') && !roles.includes('guru');
 
     const tabs = [
         { id: 'pengetahuan', label: 'Nilai Pengetahuan', icon: BookOpen, color: 'bg-blue-500' },
@@ -98,6 +113,8 @@ export default function PenilaianIndex({
                                                         className="w-20 text-center"
                                                         defaultValue={siswa.nilai?.[komponen.id]?.nilai || ''}
                                                         placeholder="0-100"
+                                                        disabled={!canInputGrades}
+                                                        readOnly={!canInputGrades}
                                                     />
                                                 </TableCell>
                                             )) : null}
@@ -121,7 +138,9 @@ export default function PenilaianIndex({
                             </Table>
                         </div>
                         <div className="mt-4 flex justify-end">
-                            <Button>Simpan Nilai Pengetahuan</Button>
+                            {canInputGrades && (
+                                <Button>Simpan Nilai Pengetahuan</Button>
+                            )}
                         </div>
                     </CardContent>
                 </Card>
@@ -179,6 +198,8 @@ export default function PenilaianIndex({
                                                         className="w-20 text-center"
                                                         defaultValue={siswa.nilai?.[komponen.id]?.nilai || ''}
                                                         placeholder="0-100"
+                                                        disabled={!canInputGrades}
+                                                        readOnly={!canInputGrades}
                                                     />
                                                 </TableCell>
                                             ))}
@@ -202,7 +223,9 @@ export default function PenilaianIndex({
                             </Table>
                         </div>
                         <div className="mt-4 flex justify-end">
-                            <Button>Simpan Nilai Keterampilan</Button>
+                            {canInputGrades && (
+                                <Button>Simpan Nilai Keterampilan</Button>
+                            )}
                         </div>
                     </CardContent>
                 </Card>
@@ -311,11 +334,14 @@ export default function PenilaianIndex({
                                                 {siswa.siswa?.user?.name || 'Nama tidak tersedia'}
                                             </TableCell>
                                             <TableCell className="text-center">
-                                                <Select defaultValue={
-                                                    jenisSikap === 'sosial' 
-                                                        ? (siswa.nilai_sosial || '') 
-                                                        : (siswa.nilai_spiritual || '')
-                                                }>
+                                                <Select 
+                                                    defaultValue={
+                                                        jenisSikap === 'sosial' 
+                                                            ? (siswa.nilai_sosial || '') 
+                                                            : (siswa.nilai_spiritual || '')
+                                                    }
+                                                    disabled={!canInputGrades}
+                                                >
                                                     <SelectTrigger className="w-20">
                                                         <SelectValue placeholder="Pilih" />
                                                     </SelectTrigger>
@@ -336,10 +362,14 @@ export default function PenilaianIndex({
                                                             : (siswa.deskripsi_spiritual || '')
                                                     }
                                                     placeholder="Deskripsi nilai sikap..."
+                                                    disabled={!canInputGrades}
+                                                    readOnly={!canInputGrades}
                                                 />
                                             </TableCell>
                                             <TableCell className="text-center">
-                                                <Button size="sm">Simpan</Button>
+                                                {canInputGrades && (
+                                                    <Button size="sm">Simpan</Button>
+                                                )}
                                             </TableCell>
                                         </TableRow>
                                     ))}
@@ -480,9 +510,11 @@ export default function PenilaianIndex({
                                                 )}
                                             </TableCell>
                                             <TableCell className="text-center">
-                                                <Button size="sm" variant="outline">
-                                                    Input Prestasi
-                                                </Button>
+                                                {canInputGrades && (
+                                                    <Button size="sm" variant="outline">
+                                                        Input Prestasi
+                                                    </Button>
+                                                )}
                                             </TableCell>
                                         </TableRow>
                                     ))}

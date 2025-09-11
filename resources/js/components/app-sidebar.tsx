@@ -65,7 +65,6 @@ export function AppSidebar() {
                 { title: 'Kelas', href: '/master/kelas' },
                 { title: 'Mata Pelajaran', href: '/master/mata-pelajaran' },
                 { title: 'Ekstrakurikuler', href: '/master/ekstrakurikuler' },
-                { title: 'KKM', href: '/master/kkm' },
             ]
         },
         {
@@ -83,17 +82,6 @@ export function AppSidebar() {
     
     // Menu untuk Kepala Sekolah
     const kepalaSekolahMenu: NavItem[] = [
-        {
-            title: 'Monitoring Sekolah',
-            href: '/monitoring',
-            icon: BarChart3,
-            items: [
-                { title: 'Overview Akademik', href: '/monitoring/overview' },
-                { title: 'Statistik Nilai', href: '/monitoring/statistik' },
-                { title: 'Laporan Bulanan', href: '/monitoring/laporan' },
-                { title: 'Data Prestasi', href: '/monitoring/prestasi' },
-            ]
-        },
         {
             title: 'Statistik & Monitoring',
             href: '/statistik',
@@ -167,16 +155,6 @@ export function AppSidebar() {
             title: 'Pantau Anak',
             href: '/wali-murid',
             icon: TrendingUp,
-            items: [
-                { title: 'Dashboard Nilai Anak', href: '/wali-murid/dashboard' },
-                { title: 'Nilai Pengetahuan', href: '/wali-murid/nilai-pengetahuan' },
-                { title: 'Nilai Keterampilan', href: '/wali-murid/nilai-keterampilan' },
-                { title: 'Nilai Sikap', href: '/wali-murid/nilai-sikap' },
-                { title: 'Nilai Ekstrakurikuler', href: '/wali-murid/nilai-ekstrakurikuler' },
-                { title: 'Absensi Anak', href: '/wali-murid/absensi' },
-                { title: 'Prestasi Anak', href: '/wali-murid/prestasi' },
-                { title: 'Progress Akademik', href: '/wali-murid/progress' },
-            ]
         },
     ];
 
@@ -198,11 +176,10 @@ export function AppSidebar() {
     // Menu Laporan (untuk role tertentu)
     const laporanMenu: NavItem[] = [
         {
-            title: 'Laporan & Raport',
+            title: 'Laporan & Export',
             href: '/laporan',
             icon: FileText,
             items: [
-                { title: 'Cetak Raport', href: '/raport' },
                 { title: 'Rekap Nilai', href: '/laporan/rekap-nilai' },
                 { title: 'Laporan Prestasi Siswa', href: '/laporan/prestasi' },
                 { title: 'Laporan Absensi', href: '/laporan/absensi' },
@@ -215,7 +192,12 @@ export function AppSidebar() {
     let mainNavItems = [...dashboardMenu];
     
     if (roles.includes('super-admin') || roles.includes('admin-sekolah')) {
-        mainNavItems = [...mainNavItems, ...adminMenu, ...clusteringMenu, ...laporanMenu];
+        mainNavItems = [...mainNavItems, ...adminMenu, ...laporanMenu];
+        
+        // Menu clustering hanya untuk super admin
+        if (roles.includes('super-admin')) {
+            mainNavItems.push(...clusteringMenu);
+        }
         
         // Tambah menu statistik untuk admin
         if (roles.includes('super-admin') || roles.includes('admin-sekolah')) {
@@ -232,11 +214,11 @@ export function AppSidebar() {
             });
         }
     } else if (roles.includes('kepala-sekolah')) {
-        mainNavItems = [...mainNavItems, ...kepalaSekolahMenu, ...clusteringMenu, ...laporanMenu];
+        mainNavItems = [...mainNavItems, ...kepalaSekolahMenu, ...laporanMenu];
     } else if (roles.includes('wali-kelas')) {
         mainNavItems = [...mainNavItems, ...waliKelasMenu, ...clusteringMenu, ...laporanMenu];
     } else if (roles.includes('guru')) {
-        mainNavItems = [...mainNavItems, ...guruMenu, ...clusteringMenu, ...laporanMenu];
+        mainNavItems = [...mainNavItems, ...guruMenu];
     } else if (roles.includes('siswa')) {
         mainNavItems = [...mainNavItems, ...siswaMenu];
     } else if (roles.includes('wali-murid')) {

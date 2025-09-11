@@ -64,7 +64,7 @@ export default function Dashboard() {
             return {
                 title: 'Administrator Sekolah',
                 greeting: 'Selamat datang di panel Admin Sekolah',
-                description: 'Kelola data sekolah, pengguna, dan konfigurasi sistem',
+                description: 'Kelola data sekolah, pengguna, dan pantau statistik akademik',
                 icon: Settings,
                 color: 'text-blue-600',
                 bgColor: 'bg-blue-50',
@@ -72,8 +72,8 @@ export default function Dashboard() {
                 features: [
                     'Manajemen pengguna sekolah',
                     'Pengaturan master data',
-                    'Laporan dan statistik',
-                    'Konfigurasi tahun ajaran'
+                    'Statistik & monitoring real-time',
+                    'Laporan akademik lengkap'
                 ]
             };
         } else if (roles.includes('kepala-sekolah')) {
@@ -86,10 +86,10 @@ export default function Dashboard() {
                 bgColor: 'bg-indigo-50',
                 borderColor: 'border-indigo-200',
                 features: [
-                    'Laporan akademik lengkap',
-                    'Analisis performa sekolah',
-                    'Clustering siswa',
-                    'Dashboard eksekutif'
+                    'Laporan eksekutif',
+                    'Trend performa sekolah',
+                    'Analisis prediktif',
+                    'Dashboard strategis'
                 ]
             };
         } else if (roles.includes('wali-kelas')) {
@@ -218,15 +218,23 @@ export default function Dashboard() {
                             <div>
                                 <div className="flex items-center gap-2 mb-2">
                                     <BarChart3 className="h-5 w-5 text-blue-600" />
-                                    <h3 className="font-semibold">Statistik Akademik</h3>
+                                    <h3 className="font-semibold">
+                                        {roles.includes('admin-sekolah') ? 'Rata-rata Akademik' : 'Statistik Akademik'}
+                                    </h3>
                                 </div>
                                 <p className="text-sm text-muted-foreground">
-                                    Data performa dan pencapaian
+                                    {roles.includes('admin-sekolah') ? 'Performa seluruh siswa' : 'Data performa dan pencapaian'}
                                 </p>
                             </div>
                             <div className="text-right">
-                                <p className="text-2xl font-bold text-blue-600">85%</p>
-                                <p className="text-xs text-muted-foreground">Rata-rata</p>
+                                <p className="text-2xl font-bold text-blue-600">
+                                    {roles.includes('admin-sekolah') ? '83.2%' : 
+                                     roles.includes('kepala-sekolah') ? '89.4%' : '85%'}
+                                </p>
+                                <p className="text-xs text-muted-foreground">
+                                    {roles.includes('admin-sekolah') ? 'Ketuntasan KKM' : 
+                                     roles.includes('kepala-sekolah') ? 'Target Akademik' : 'Rata-rata'}
+                                </p>
                             </div>
                         </div>
                         <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/10 dark:stroke-neutral-100/10 -z-10" />
@@ -237,15 +245,25 @@ export default function Dashboard() {
                             <div>
                                 <div className="flex items-center gap-2 mb-2">
                                     <Award className="h-5 w-5 text-green-600" />
-                                    <h3 className="font-semibold">Prestasi</h3>
+                                    <h3 className="font-semibold">
+                                        {roles.includes('admin-sekolah') ? 'Total Siswa' : 
+                                         roles.includes('kepala-sekolah') ? 'Efektivitas' : 'Prestasi'}
+                                    </h3>
                                 </div>
                                 <p className="text-sm text-muted-foreground">
-                                    Pencapaian dan penghargaan
+                                    {roles.includes('admin-sekolah') ? 'Siswa aktif sekolah' : 
+                                     roles.includes('kepala-sekolah') ? 'Program pembelajaran' : 'Pencapaian dan penghargaan'}
                                 </p>
                             </div>
                             <div className="text-right">
-                                <p className="text-2xl font-bold text-green-600">24</p>
-                                <p className="text-xs text-muted-foreground">Total</p>
+                                <p className="text-2xl font-bold text-green-600">
+                                    {roles.includes('admin-sekolah') ? '1,247' : 
+                                     roles.includes('kepala-sekolah') ? '94.1%' : '24'}
+                                </p>
+                                <p className="text-xs text-muted-foreground">
+                                    {roles.includes('admin-sekolah') ? 'Siswa' : 
+                                     roles.includes('kepala-sekolah') ? 'Efektif' : 'Total'}
+                                </p>
                             </div>
                         </div>
                         <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/10 dark:stroke-neutral-100/10 -z-10" />
@@ -256,37 +274,197 @@ export default function Dashboard() {
                             <div>
                                 <div className="flex items-center gap-2 mb-2">
                                     <Users className="h-5 w-5 text-purple-600" />
-                                    <h3 className="font-semibold">Aktivitas</h3>
+                                    <h3 className="font-semibold">
+                                        {roles.includes('admin-sekolah') ? 'Total Guru' : 
+                                         roles.includes('kepala-sekolah') ? 'Satisfaction' : 'Aktivitas'}
+                                    </h3>
                                 </div>
                                 <p className="text-sm text-muted-foreground">
-                                    Kegiatan dan partisipasi
+                                    {roles.includes('admin-sekolah') ? 'Tenaga pendidik aktif' : 
+                                     roles.includes('kepala-sekolah') ? 'Kepuasan stakeholder' : 'Kegiatan dan partisipasi'}
                                 </p>
                             </div>
                             <div className="text-right">
-                                <p className="text-2xl font-bold text-purple-600">98%</p>
-                                <p className="text-xs text-muted-foreground">Kehadiran</p>
+                                <p className="text-2xl font-bold text-purple-600">
+                                    {roles.includes('admin-sekolah') ? '87' : 
+                                     roles.includes('kepala-sekolah') ? '4.7★' : '98%'}
+                                </p>
+                                <p className="text-xs text-muted-foreground">
+                                    {roles.includes('admin-sekolah') ? 'Guru' : 
+                                     roles.includes('kepala-sekolah') ? 'Rating' : 'Kehadiran'}
+                                </p>
                             </div>
                         </div>
                         <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/10 dark:stroke-neutral-100/10 -z-10" />
                     </div>
                 </div>
 
-                {/* Main Content Area */}
-                <div className="relative min-h-[60vh] flex-1 overflow-hidden rounded-xl border border-sidebar-border/70 md:min-h-min dark:border-sidebar-border">
-                    <div className="absolute inset-0 p-8 flex flex-col items-center justify-center text-center">
-                        <div className="max-w-md mx-auto">
-                            <div className={`w-16 h-16 mx-auto mb-4 rounded-full ${roleInfo.bgColor} flex items-center justify-center`}>
-                                <Icon className={`h-8 w-8 ${roleInfo.color}`} />
+                {/* Main Content Area - Admin khusus */}
+                {roles.includes('admin-sekolah') ? (
+                    <div className="grid gap-4 md:grid-cols-2">
+                        {/* Distribusi Siswa per Jurusan */}
+                        <div className="relative overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
+                            <div className="p-6">
+                                <div className="flex items-center gap-2 mb-4">
+                                    <BarChart3 className="h-5 w-5 text-blue-600" />
+                                    <h3 className="font-semibold">Distribusi Siswa per Jurusan</h3>
+                                </div>
+                                <div className="space-y-3">
+                                    <div className="flex justify-between items-center">
+                                        <span className="text-sm">Teknik Komputer Jaringan</span>
+                                        <div className="flex items-center gap-2">
+                                            <div className="bg-blue-200 rounded-full h-2 w-32">
+                                                <div className="bg-blue-600 h-2 rounded-full" style={{width: '78%'}}></div>
+                                            </div>
+                                            <span className="text-sm font-medium">487 (78%)</span>
+                                        </div>
+                                    </div>
+                                    <div className="flex justify-between items-center">
+                                        <span className="text-sm">Multimedia</span>
+                                        <div className="flex items-center gap-2">
+                                            <div className="bg-green-200 rounded-full h-2 w-32">
+                                                <div className="bg-green-600 h-2 rounded-full" style={{width: '65%'}}></div>
+                                            </div>
+                                            <span className="text-sm font-medium">325 (65%)</span>
+                                        </div>
+                                    </div>
+                                    <div className="flex justify-between items-center">
+                                        <span className="text-sm">Otomatisasi Industri</span>
+                                        <div className="flex items-center gap-2">
+                                            <div className="bg-purple-200 rounded-full h-2 w-32">
+                                                <div className="bg-purple-600 h-2 rounded-full" style={{width: '42%'}}></div>
+                                            </div>
+                                            <span className="text-sm font-medium">435 (87%)</span>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <h2 className="text-xl font-semibold mb-2">Area Konten Utama</h2>
-                            <p className="text-muted-foreground">
-                                Konten dashboard spesifik untuk role {roleInfo.title} akan ditampilkan di sini.
-                                Navigasi ke menu yang tersedia untuk mengakses fitur lengkap.
-                            </p>
+                        </div>
+
+                        {/* Prestasi per Tingkat */}
+                        <div className="relative overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
+                            <div className="p-6">
+                                <div className="flex items-center gap-2 mb-4">
+                                    <Award className="h-5 w-5 text-green-600" />
+                                    <h3 className="font-semibold">Prestasi per Tingkat</h3>
+                                </div>
+                                <div className="space-y-3">
+                                    <div className="flex justify-between items-center p-3 bg-yellow-50 rounded-lg">
+                                        <span className="text-sm font-medium">Internasional</span>
+                                        <span className="text-lg font-bold text-yellow-600">3</span>
+                                    </div>
+                                    <div className="flex justify-between items-center p-3 bg-blue-50 rounded-lg">
+                                        <span className="text-sm font-medium">Nasional</span>
+                                        <span className="text-lg font-bold text-blue-600">12</span>
+                                    </div>
+                                    <div className="flex justify-between items-center p-3 bg-green-50 rounded-lg">
+                                        <span className="text-sm font-medium">Provinsi</span>
+                                        <span className="text-lg font-bold text-green-600">28</span>
+                                    </div>
+                                    <div className="flex justify-between items-center p-3 bg-purple-50 rounded-lg">
+                                        <span className="text-sm font-medium">Kabupaten/Kota</span>
+                                        <span className="text-lg font-bold text-purple-600">45</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/5 dark:stroke-neutral-100/5 -z-10" />
-                </div>
+                ) : roles.includes('kepala-sekolah') ? (
+                    <div className="grid gap-4 md:grid-cols-2">
+                        {/* Key Performance Indicators */}
+                        <div className="relative overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
+                            <div className="p-6">
+                                <div className="flex items-center gap-2 mb-4">
+                                    <School className="h-5 w-5 text-indigo-600" />
+                                    <h3 className="font-semibold">Key Performance Indicators</h3>
+                                </div>
+                                <div className="space-y-4">
+                                    <div className="flex justify-between items-center">
+                                        <span className="text-sm">Ketuntasan Akademik</span>
+                                        <div className="flex items-center gap-2">
+                                            <div className="bg-indigo-200 rounded-full h-2 w-24">
+                                                <div className="bg-indigo-600 h-2 rounded-full" style={{width: '89%'}}></div>
+                                            </div>
+                                            <span className="text-sm font-bold text-indigo-600">89%</span>
+                                        </div>
+                                    </div>
+                                    <div className="flex justify-between items-center">
+                                        <span className="text-sm">Tingkat Kehadiran</span>
+                                        <div className="flex items-center gap-2">
+                                            <div className="bg-green-200 rounded-full h-2 w-24">
+                                                <div className="bg-green-600 h-2 rounded-full" style={{width: '94%'}}></div>
+                                            </div>
+                                            <span className="text-sm font-bold text-green-600">94%</span>
+                                        </div>
+                                    </div>
+                                    <div className="flex justify-between items-center">
+                                        <span className="text-sm">Kepuasan Stakeholder</span>
+                                        <div className="flex items-center gap-2">
+                                            <div className="bg-blue-200 rounded-full h-2 w-24">
+                                                <div className="bg-blue-600 h-2 rounded-full" style={{width: '87%'}}></div>
+                                            </div>
+                                            <span className="text-sm font-bold text-blue-600">87%</span>
+                                        </div>
+                                    </div>
+                                    <div className="flex justify-between items-center">
+                                        <span className="text-sm">Pencapaian Target</span>
+                                        <div className="flex items-center gap-2">
+                                            <div className="bg-purple-200 rounded-full h-2 w-24">
+                                                <div className="bg-purple-600 h-2 rounded-full" style={{width: '92%'}}></div>
+                                            </div>
+                                            <span className="text-sm font-bold text-purple-600">92%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Trend Performa Bulanan */}
+                        <div className="relative overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
+                            <div className="p-6">
+                                <div className="flex items-center gap-2 mb-4">
+                                    <BarChart3 className="h-5 w-5 text-blue-600" />
+                                    <h3 className="font-semibold">Trend Performa 6 Bulan</h3>
+                                </div>
+                                <div className="space-y-3">
+                                    <div className="flex justify-between items-center p-2 border-l-4 border-green-500 bg-green-50">
+                                        <span className="text-sm font-medium">Januari</span>
+                                        <span className="text-sm font-bold text-green-600">85.2% ↗</span>
+                                    </div>
+                                    <div className="flex justify-between items-center p-2 border-l-4 border-green-500 bg-green-50">
+                                        <span className="text-sm font-medium">Februari</span>
+                                        <span className="text-sm font-bold text-green-600">86.7% ↗</span>
+                                    </div>
+                                    <div className="flex justify-between items-center p-2 border-l-4 border-yellow-500 bg-yellow-50">
+                                        <span className="text-sm font-medium">Maret</span>
+                                        <span className="text-sm font-bold text-yellow-600">84.1% ↘</span>
+                                    </div>
+                                    <div className="flex justify-between items-center p-2 border-l-4 border-green-500 bg-green-50">
+                                        <span className="text-sm font-medium">April</span>
+                                        <span className="text-sm font-bold text-green-600">87.9% ↗</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                ) : (
+                    /* Main Content Area */
+                    <div className="relative min-h-[60vh] flex-1 overflow-hidden rounded-xl border border-sidebar-border/70 md:min-h-min dark:border-sidebar-border">
+                        <div className="absolute inset-0 p-8 flex flex-col items-center justify-center text-center">
+                            <div className="max-w-md mx-auto">
+                                <div className={`w-16 h-16 mx-auto mb-4 rounded-full ${roleInfo.bgColor} flex items-center justify-center`}>
+                                    <Icon className={`h-8 w-8 ${roleInfo.color}`} />
+                                </div>
+                                <h2 className="text-xl font-semibold mb-2">Area Konten Utama</h2>
+                                <p className="text-muted-foreground">
+                                    Konten dashboard spesifik untuk role {roleInfo.title} akan ditampilkan di sini.
+                                    Navigasi ke menu yang tersedia untuk mengakses fitur lengkap.
+                                </p>
+                            </div>
+                        </div>
+                        <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/5 dark:stroke-neutral-100/5 -z-10" />
+                    </div>
+                )}
             </div>
         </AppLayout>
     );
